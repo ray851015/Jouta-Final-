@@ -1,0 +1,152 @@
+﻿@{
+    Layout = null;
+}
+@*@model IEnumerable<tMember>*@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="">
+    <title>網站概覽 | Jouta Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="~/Content/css/dashboard.css" rel="stylesheet" />
+
+    <style>
+        *{
+            /*border:1px solid red;*/
+        }
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+        }
+
+        #chart-line, #chart-pie, #chart-bar, #chart-column {
+            min-width: 50%;
+            height: 50%;
+            /*margin: 0 auto;*/
+        }
+    </style>
+
+</head>
+
+<body>
+
+    @*圖表js須優先載入*@
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="~/Scripts/IIIProject/adminchart.js"></script>
+
+    @*navbar*@
+    <form action="/後台旅遊/List" method="GET">
+        <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="@Url.Action("Home","後台Home")">
+                <img src="~/Content/images/joutalogo.png" width="14" class="mr-2" />Jouta Admin
+            </a>
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <a>
+                        @Html.ActionLink("Sign out", "Home", "Home", new { id = 0 }, new { @class = "nav-link" })
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </form>
+
+    @*sidebar*@
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Home","後台Home")">
+                                <span data-feather="home"></span>
+                                網站概覽　<
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("List","後台會員")">
+                                <span data-feather="users"></span>
+                                會員列表
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("List","後台旅遊")">
+                                <span data-feather="file"></span>
+                                旅遊列表
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("List","後台飯局")">
+                                <span data-feather="bar-chart-2"></span>
+                                飯局列表
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("List","後台文章")">
+                                <span data-feather="layers"></span>
+                                文章列表
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("List","聯絡我們")">
+                                <span data-feather="message-square"></span>
+                                意見列表
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("List","優惠發送")">
+                                <span data-feather="gift"></span>
+                                優惠發送
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </nav>
+
+            @*主內容*@
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <figure class="highcharts-figure">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div id="chart-line"></div>
+                            <div id="chart-pie"></div>
+                        </div>
+
+                        <div class="row">
+                            <div id="chart-bar"></div>
+                            <div id="chart-column"></div>
+                        </div>
+
+                    </div>
+
+                </figure>
+            </main>
+        </div>
+    </div>
+
+    <script src="~/Content/bootstrap-4.5.2-dist/js/bootstrap.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="~/Scripts/IIIProject/dashboard.js"></script>
+
+</body>
+
+</html>

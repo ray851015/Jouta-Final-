@@ -1,0 +1,253 @@
+﻿@model  tActivity
+
+@{
+    dbJoutaEntities db = new dbJoutaEntities();
+    Layout = null;
+    var x = (tMember)Session["member"];
+
+    var commentList = new List<tBlogComment>();
+
+
+    commentList = (from t in db.tBlogComment
+                   where Model.f活動編號 == t.f活動編號
+                   select t).ToList();
+
+}
+
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章 | Jouta</title>
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/sass/style.css">
+    <link rel="stylesheet" href="~/Content/css/blog_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg navbar-fixed-top" id="main">
+            <div class="container">
+                <a class="navbar-brand" href="@Url.Action("Home", "Home")">
+                    @*改用Url.Action*@
+                    <img src="~/Content/images/joutalogo_black.png" alt="" width="100">
+                </a>
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse justify-content-between" id="navbarNav">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item active">@Html.ActionLink("首頁", "Home", "Home", new { }, new { @class = "nav-link nav-main text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找飯局", "EatIndex", "Eat", new { }, new { @class = "nav-link nav-eat text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找旅遊", "TravelIndex", "Travel", new { }, new { @class = "nav-link nav-travel text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找文章", "Index", "Blog", new { }, new { @class = "nav-link nav-blog text-dark" })</li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        @if (Session["member"] != null)
+                        {
+                            <li class="nav-item nav-link nav-login text-dark">@Html.ActionLink("您好，" + x.f會員名稱, "ProfileIndex", "Profile") </li>
+                            <li class="nav-item">@Html.ActionLink("登出", "Home", "Home", new { id = 0 }, new { @class = "nav-link nav-login text-dark" })</li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">@Html.ActionLink("登入", "LoginIndex", "Login", new { }, new { @class = "nav-link nav-login text-dark" })</li>
+                            <li class="nav-item">@Html.ActionLink("註冊", "Register", "Home", new { }, new { @class = "nav-link nav-register text-dark" })</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Page Content -->
+    <div class="container mb-5">
+
+        <div class="row blogbox" id="main-section">
+
+            <!-- Post Content Column -->
+            <div class="col-lg-8">
+
+                <!-- Title -->
+                <h1 class="mt-4">
+                    @Model.f活動標題
+                </h1>
+
+
+
+
+                <!-- Author -->
+                <p class="lead">
+                    by @Model.tMember.f會員名稱
+                </p>
+
+
+
+
+                <hr>
+                <!-- Date/Time -->
+                <p class="pDateSection">@Model.f活動發起日期 </p>
+
+                <hr>
+
+                <!-- Preview Image -->
+
+
+                <img class="img-fluid rounded" src="~/Content/images/@Model.f活動團圖" alt="">
+
+
+
+
+
+
+                @*<img class="img-fluid rounded" src="~/Content/images/blogPost.jpg" alt="">*@
+
+
+
+                <hr>
+
+                <!-- Post Content -->
+
+                <p>
+                    @Model.f活動內容
+                </p>
+
+
+
+
+                <div class="con" style="text-align:end">
+                    @*<i class="fas fa-star" id="s1"></i>
+        <i class="fas fa-star" id="s2"></i>
+        <i class="fas fa-star" id="s3"></i>
+        <i class="fas fa-star" id="s4"></i>
+        <i class="fas fa-star" id="s5"></i>*@
+
+                    <span>@Html.ActionLink("LikeIt", "LikeIt", "Blog", new { id = Model.f活動編號 }, new { @class = "btn btnContent" })</span>
+                    <span> <img src="@Url.Action("PhotoGet","Blog",new { id = Model.f活動編號 })" width="100" /> </span>
+                </div>
+
+
+
+                <hr>
+
+
+
+                <!-- Comments Form -->
+                
+                <div class="card my-4">
+                    <h5 class="card-header">留下您的留言：</h5>
+                    <div class="card-body">
+                        @using (Html.BeginForm("AddComment", "Blog", FormMethod.Post, new { }))
+                        {
+                           @Html.HiddenFor(p => p.f活動編號)
+
+                           @Html.TextBox("Content")
+
+                           <input type="submit" value="留言" class="btn btn-default">
+                        }
+                    </div>
+                </div>
+                
+                <!-- Single Comment -->
+                <div class="media mb-4">
+                    
+                    <div class="media-body">
+                        @{
+                            foreach (var commemt in commentList)
+                            {
+
+                                    <div class="row">
+                                        <img class="d-flex mr-3 rounded-circle" src="~/Content/images/09.png" alt="" >
+                                        <div >@commemt.fBlogComment</div>
+                                    </div>
+                                  
+                                <div>@commemt.fCreateDate </div>
+                                }
+
+                        }
+
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-4" id="sidebar">
+
+
+                <section id="achang-intro-2" class="card my-4">
+
+
+                    <h3 class="card-header">@Model.tMember.f會員名稱</h3>
+
+
+
+                    @*<img src="https://picsum.photos/300/300/?random=1">*@
+                    <p class="content mt-2">
+
+
+                        <img src="~/Content/images/@Model.tMember.f會員大頭貼" style="width:300px; height:300px">
+                        <br>
+                        @Model.tMember.f會員自我介紹
+                        <br>
+                        <i class="fab fa-instagram"></i>@Model.tMember.f會員名稱
+                        <br>
+                        <i class="far fa-envelope"></i>@Model.tMember.f會員電子郵件
+
+
+
+                    </p>
+                </section>
+
+
+
+                <!-- Side Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Side Widget</h5>
+                    <!-- <div class="card-body"> -->
+
+                    <iframe src="https://www.instagram.com/p/CAHMofInFwy/embed/captioned/?cr=1&amp;v=12&amp;wp=956&amp;rd=https%3A%2F%2Fletswritetw.github.io&amp;rp=%2Fletswrite-instagram-embed%2F#%7B%22ci%22%3A0%2C%22os%22%3A54857.92500000389%2C%22ls%22%3A457.45000000169966%2C%22le%22%3A458.2700000028126%7D"
+                            width="340" height="500" style="border:none;overflow:hidden ;height: 500px;" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+                    <script async src="//www.instagram.com/embed.js"></script>
+                </div>
+                <div class="card my-4">
+                    <!-- <h5 class="card-header">Side Widget</h5> -->
+                    <!-- <div class="card-body"> -->
+                    <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fnoraneko.nyankichi%2F&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340"
+                            height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- footer -->
+    <div class="container-fluid footer">
+        <p class="text-center mt-2 mb-2">&copy; @DateTime.Now.Year Jouta All rights reserved</p>
+    </div>
+
+    <!-- script -->
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Scripts/IIIProject/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.7/semantic.min.js"></script>
+    <script src="~/Scripts/IIIProject/navbar.js"></script>
+    <script src="~/Scripts/IIIProject/blog.js"></script>
+
+</body>
+
+</html>

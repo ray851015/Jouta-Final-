@@ -1,0 +1,178 @@
+﻿@*@model IEnumerable<tActivity>*@
+@using PagedList
+@using PagedList.Mvc
+
+
+@{
+    Layout = null;
+    var x = (tMember)Session["member"];
+}
+@model IPagedList<IIIProject_travel.tActivity>
+
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章 | Jouta</title>
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/sass/style.css">
+    <link rel="stylesheet" href="~/Content/css/blog_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    @*<script src="~/Scripts/jquery-3.5.1.js"></script>*@
+</head>
+
+<body>
+    <div class="container-fluid ">
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg navbar-fixed-top" id="main">
+            <div class="container">
+                <a class="navbar-brand" href="@Url.Action("Home", "Home")">
+                    @*改用Url.Action*@
+                    <img src="~/Content/images/joutalogo_black.png" alt="" width="100">
+                </a>
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse justify-content-between" id="navbarNav">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item active">@Html.ActionLink("首頁", "Home", "Home", new { }, new { @class = "nav-link nav-main text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找飯局", "EatIndex", "Eat", new { }, new { @class = "nav-link nav-eat text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找旅遊", "TravelIndex", "Travel", new { }, new { @class = "nav-link nav-travel text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找文章", "Index", "Blog", new { }, new { @class = "nav-link nav-blog text-dark" })</li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        @if (Session["member"] != null)
+                        {
+                            <li class="nav-item nav-link nav-login text-dark">@Html.ActionLink("您好，" + x.f會員名稱, "ProfileIndex", "Profile") </li>
+                            <li class="nav-item">@Html.ActionLink("登出", "Home", "Home", new { id = 0 }, new { @class = "nav-link nav-login text-dark" })</li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">@Html.ActionLink("登入", "LoginIndex", "Login", new { }, new { @class = "nav-link nav-login text-dark" })</li>
+                            <li class="nav-item">@Html.ActionLink("註冊", "Register", "Home", new { }, new { @class = "nav-link nav-register text-dark" })</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row blogbox">
+
+
+
+            <div class="col-md-3" id="sidebar" style="padding-top:60px">
+                <h3 class="my-4">
+                    排序與搜尋列
+                </h3>
+
+
+                <div style="margin-top:10px">@Html.ActionLink("依日期遠近", "Index", new { sortOder = ViewBag.dateOrder, currentfilter = ViewBag.Sernow }, new { @class = "btn btn-outline-warning" })</div>
+
+                <div style="margin-top:10px">@Html.ActionLink("依按讚人數", "Index", new { sortOder = ViewBag.LikeOrder, currentfilter = ViewBag.Sernow }, new { @class = "btn btn-outline-warning" })</div>
+
+                <div style="margin-top:10px">@Html.ActionLink("依瀏覽次數", "Index", new { sortOder = ViewBag.preViewOrder, currentfilter = ViewBag.Sernow }, new { @class = "btn btn-outline-warning" })</div>
+
+
+
+
+                <form action="/Blog/Index" method="GET">
+                    <div class="card my-4">
+                        <h5 class="card-header">標題搜尋</h5>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="txtKey" placeholder="輸入">
+                                <span class="input-group-append">
+                                    <button class="btn btn-secondary"
+                                            type="submit">
+                                        Go!
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+
+
+            <!-- Blog Entries Column -->
+            <div class="col-md-9" id="main-section">
+
+                <h2 class="my-4" style="text-align:center">
+                    Jouta的精選文章
+                </h2>
+
+                <hr size="8" width="100%">
+                @{
+                    foreach (tActivity tArticle in Model)
+                    {
+
+                        <!-- Blog Post -->
+                        <div class="card mb-4">
+                            <img class="card-img-top" src="~/Content/images/@tArticle.f活動團圖">
+                            <div class="card-body">
+                                <h2 class="card-title">@tArticle.f活動標題</h2>
+                                <p class="a-ellipsis">
+                                    @tArticle.f活動內容
+                                </p>
+                                <a class="nav-item">@Html.ActionLink("Read More", "BlogContent", "Blog", new { id = tArticle.f活動編號 }, new { @class = "btn btnContent" })</a>
+                            </div>
+                            <div class="card-footer text-muted row">
+
+
+
+                                <p class="pDateSection"> Posted on @tArticle.f活動發起日期 by</p> <p style="margin-left:10px">@Html.ActionLink(tArticle.tMember.f會員名稱, "personalIndex", "Blog", new {id = tArticle.f會員編號 }, new { @class = "" })</p>
+
+                                <p style="padding-left:200px">瀏覽次數: @tArticle.f活動瀏覽次數</p>
+
+                                <p style="padding-left:10px">按讚次數: @tArticle.f活動讚數</p>
+                            </div>
+                        </div>
+                    }
+                }
+
+
+
+
+                <!-- Pagination -->
+                <ul class="pagination justify-content-center mb-4">
+
+                    @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page }))
+                </ul>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <!-- footer -->
+
+
+    <div class="container-fluid footer">
+        <p class="text-center mt-2 mb-2">Copyright © 2020 Jouta All rights reserved</p>
+    </div>
+
+    <!-- script -->
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Scripts/IIIProject/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script src="~/Scripts/IIIProject/navbar.js"></script>
+
+</body>
+
+</html>

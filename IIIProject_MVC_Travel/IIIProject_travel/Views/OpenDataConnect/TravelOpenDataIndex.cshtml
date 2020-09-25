@@ -1,0 +1,151 @@
+﻿@model IPagedList<IIIProject_travel.Models.Topendata>
+
+@using PagedList
+@using PagedList.Mvc
+
+@{
+    Layout = null;
+
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+<script src="~/Scripts/jquery-3.5.1.js"></script>
+
+
+
+
+
+
+<style>
+
+    td {
+        /*width: auto;
+        height: auto;
+        border-width: 2px;
+        border-color: black;
+        border-style: solid;
+        border-right:solid;
+        border-right-color:black;
+        border-width:thick;
+        text-wrap: none;
+        padding: 0px;
+        margin: 0px;*/
+        
+    }
+
+        td.a {
+            display: -webkit-box;
+            overflow: hidden;
+            height: auto;
+            /*white-space: nowrap;*/
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 3;
+            /*想顯示的行數 lines you want to display */
+            -webkit-box-orient: vertical;
+            width: 600px;
+            height:78px;
+        }
+</style>
+
+<h2>TravelOpenDataIndex</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            活動名稱
+        </th>
+        <th>
+            活動敘述
+        </th>
+
+        <th>
+            活動地點
+        </th>
+        <th>
+            詳細地址
+        </th>
+        <th>
+            地區
+        </th>
+        <th>
+            鄉鎮
+        </th>
+
+        <th>
+            舉辦單位
+        </th>
+        <th>
+            開始時間
+        </th>
+        <th>
+            結束時間
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="width:200px">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="a" title="@Html.DisplayFor(modelItem => item.Description)">
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+
+            <td style="width:150px">
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td style="width:330px">
+                @Html.DisplayFor(modelItem => item.Add)
+            </td>
+            <td style="width:80px">
+                @Html.DisplayFor(modelItem => item.Region)
+            </td>
+            <td style="width:80px">
+                @Html.DisplayFor(modelItem => item.Town)
+            </td>
+
+            <td >
+                @Html.DisplayFor(modelItem => item.Org)
+            </td>
+            <td style="width:70px">
+                @Html.DisplayFor(modelItem => item.Start)
+            </td>
+            <td style="width:70px">
+                @Html.DisplayFor(modelItem => item.End)
+            </td>
+
+
+        </tr>
+    }
+
+</table>
+
+<ul class="pagination justify-content-center mb-4">
+
+    @Html.PagedListPager(Model, Page => Url.Action("TravelOpenDataIndex", new { Page }))
+</ul>
+
+
+
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.5.1.js"></script>
+
+<script>
+
+    $(function () {
+        $("td").on("click", function () {
+            if (this.offsetWidth < this.scrollWidth) {
+                var that = this;
+                var text = $(this).text();
+                layer.alert(text);
+            }
+        });
+    })
+
+
+
+</script>

@@ -1,0 +1,138 @@
+﻿@model IIIProject_travel.ViewModel.CLogin
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入 | Jouta</title>
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/sass/style.css">
+    <link rel="stylesheet" href="~/Content/css/login2.css">
+    <link href="~/Content/fontawesome/css/all.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <style>
+        #eye {
+            float: right;
+            position: relative;
+            bottom: 30px;
+            right: 10px;
+            color:black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg navbar-fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="@Url.Action("Home", "Home")">
+                    @*改用Url.Action*@
+                    <img src="~/Content/images/joutalogo_black.png" alt="" width="100">
+                </a>
+                @*<div class="navbar-header" id="main">*@
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                @*</div>*@
+                <div class="navbar-collapse collapse justify-content-between" id="navbarNav">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item active">@Html.ActionLink("首頁", "Home", "Home", new { }, new { @class = "nav-link nav-main text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找飯局", "EatIndex", "Eat", new { }, new { @class = "nav-link nav-eat text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找旅遊", "TravelIndex", "Travel", new { }, new { @class = "nav-link nav-travel text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找文章", "Index", "Blog", new { }, new { @class = "nav-link nav-blog text-dark" })</li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                            <li class="nav-item">@Html.ActionLink("登入", "LoginIndex", "Login", new { }, new { @class = "nav-link nav-login text-dark" })</li>
+                            <li class="nav-item">@Html.ActionLink("註冊", "Register", "Home", new { }, new { @class = "nav-link nav-register text-dark" })</li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+    <div class="cont">
+        <div class="form sign-in">
+            <h2 id="demo">歡迎登入</h2>
+            @using (Html.BeginForm("LoginIndex", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                
+                <label>
+                    <input id="txtEmail" type="text" name="txtEmail" placeholder="信箱" />
+                    @Html.ValidationMessageFor(model => model.txtEmail, "", new { @class = "text-danger" })
+                </label>
+                <label>
+                    <input id="txtPassword" type="password" name="txtPassword" placeholder="密碼"/><span id="eye"><i class="fas fa-eye"></i></span>
+                    @Html.ValidationMessageFor(model => model.txtPassword, "", new { @class = "text-danger" })
+                </label>
+                <br/>
+                <p class="forgot-pass">Forgot password?</p>
+                <div class="row justify-content-center mt-2">
+                    <input class="btn btn-link col-3" type="submit" name="submit" value="登入" />
+                    <a class="btn fb-btn col-3 ml-1" href="~/Home/ForgetPassword">忘記密碼</a>
+                </div>
+            }
+            </div>
+        <div class="sub-cont">
+            <div class="img">
+                <div class="img__text m--up">
+                    <h2 id="demo2">新面孔?</h2>
+                    <p id="demo3">還不快速手刀加一個!</p>
+                </div>
+                <div class="img__btn">
+                    <span class="m--up"><a style="z-index:9;color:#fff;text-decoration:none;" href="~/Home/Register">註冊</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div class="container-fluid footer">
+        <p class="text-center mt-2 mb-2">Copyright © 2020 Jouta All rights reserved</p>
+    </div>
+
+    <!-- script -->
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Scripts/IIIProject/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/IIIProject/navbar.js"></script>
+    @*匯入驗證用的js*@
+    @section Scripts{
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+<script>
+    $("#demo").click(function () {
+        $("#txtEmail").val("peipei@gmail.com");
+        $("#txtPassword").val("peipei33");
+    });
+    $("#demo2").click(function () {
+        $("#txtEmail").val("admin");
+        $("#txtPassword").val("admin");
+    });
+    $("#demo3").click(function () {
+        $("#txtEmail").val("pikaqiu193@gmail.com");
+        $("#txtPassword").val("pika123456");
+    });
+
+    $('#eye').click(function () {
+        icon = $(this).find("i");
+        if (icon.hasClass("fa-eye")) {
+            $("#txtPassword").attr("type", "text");
+            icon.addClass("fa-eye-slash").removeClass("fa-eye");
+        } else {
+            $("#txtPassword").attr("type", "password");
+            icon.addClass("fa-eye").removeClass("fa-eye-slash");
+        }
+    }) 
+</script>
+</body>
+
+</html>

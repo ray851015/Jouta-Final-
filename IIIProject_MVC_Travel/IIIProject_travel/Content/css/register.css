@@ -1,0 +1,86 @@
+html, body {
+    overflow: hidden;
+}
+
+body {
+    background: linear-gradient(rgba(255,255,230,0.5),rgba(255,255,230,0.51)), url('http://subtlepatterns.com/patterns/geometry2.png');
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+h3,p{
+    color:#333333;
+}
+
+.cMain{
+    margin-top: 18vh;
+}
+
+.btn-primary{
+    background-color:#f5be2e;
+}
+
+.register-left{
+    text-align: center;
+    color: #fff;
+    padding: 30px;
+    float: left;
+    margin: auto;
+    width: 50%;
+}
+
+.register-left img{
+    width: 100%;
+    padding-bottom: 30px;
+}
+
+.register-right{
+    border: 1px solid #f5be2e;
+    background-color: #eeeeee;
+    padding: 50px;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+    box-shadow:3px 4px 10px #323232;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+}
+
+.register-right h2
+{
+    text-align: center;
+    margin-bottom: 10px;
+    color:#555 ;
+    font-weight: 600;
+}
+
+.register-form{
+    padding: 30px;
+}
+
+.register-right .btn{
+    border-radius: 1.5rem;
+    border: none;
+    width: 120px;
+    /*background:#ff9800;*/
+    font-weight: 600;
+    color: #fff;
+    margin-top: 20px;
+    padding: 10px;
+    float: right;
+}
+
+.gender{
+    padding: auto;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+
+.sex{
+    text-align: center;
+}
+
+.register-right .btn-primary:hover{
+    background: #ff5722;
+}

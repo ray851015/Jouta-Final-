@@ -1,0 +1,222 @@
+﻿@model IIIProject_travel.tMember
+
+@{
+    ViewBag.Title = "e修改";
+}
+@{
+    Layout = null;
+}
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>查看 | Jouta</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="~/Content/css/dashboard.css" rel="stylesheet" />
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+        }
+
+        body {
+            margin-bottom: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="@Url.Action("Home","後台Home")">
+            <img src="~/Content/images/joutalogo.png" width="14" class="mr-2" />Jouta Admin
+        </a>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a>
+                    @Html.ActionLink("Sign out", "Home", "Home", new { id = 0 }, new { @class = "nav-link" })
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Home","後台Home")">
+                                <span data-feather="home"></span>
+                                網站概覽
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("List","後台會員")">
+                                <span data-feather="users"></span>
+                                會員列表　<
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("List","後台旅遊")">
+                                <span data-feather="file"></span>
+                                旅遊列表
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("List","後台飯局")">
+                                <span data-feather="bar-chart-2"></span>
+                                飯局列表
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("List","後台文章")">
+                                <span data-feather="layers"></span>
+                                文章列表
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("List","聯絡我們")">
+                                <span data-feather="message-square"></span>
+                                意見列表
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("List","優惠發送")">
+                                <span data-feather="gift"></span>
+                                優惠發送
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+
+                <h2>修改會員</h2>
+                <div class="table-responsive">
+
+                    <form method="post">
+                        @if (Model.f會員大頭貼 == null)
+                        {
+                            Model.f會員大頭貼 = "nullhead.jpg";
+                        }
+                        <input type="hidden" name="f會員編號" value="@Model.f會員編號" />
+                        <div class="row; overflow-x: hidden;">
+                            <div class="col">
+                                <div>
+                                    <img src="~/Content/images/@Model.f會員大頭貼" style="width:100px;height:100px;" />
+
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        姓名：<br />
+                                        <input type="text" name="f會員名稱" value="@Model.f會員名稱" class="form-control" />
+                                    </div>
+                                    <div class="col">
+                                        評分：<br />
+                                        <input type="text" name="f會員評分" value="@Model.f會員評分" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        稱號：<br />
+                                        <input type="text" name="f會員稱號" value="@Model.f會員稱號" class="form-control" />
+                                    </div>
+                                    <div class="col">
+                                        興趣：<br />
+                                        <input type="text" name="f會員興趣" value="@Model.f會員興趣" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        帳號：<br />
+                                        <input type="text" name="f會員帳號" value="@Model.f會員帳號" class="form-control" />
+                                    </div>
+                                    <div class="col">
+                                        密碼：<br />
+                                        <input type="text" name="f會員密碼" value="@Model.f會員密碼" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        電子郵件：<br />
+                                        <input type="text" name="f會員電子郵件" value="@Model.f會員電子郵件" class="form-control" />
+                                    </div>
+                                    <div class="col">
+                                        手機：<br />
+                                        <input type="text" name="f會員手機" value="@Model.f會員手機" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        電話：<br />
+                                        <input type="text" name="f會員密碼" value="@Model.f會員電話" class="form-control" />
+                                    </div>
+                                    <div class="col">
+                                        生日：<br />
+                                        <input type="text" name="f會員生日" value="@Model.f會員生日" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        暱稱：<br />
+                                        <input type="text" name="f會員暱稱" value="@Model.f會員暱稱" class="form-control" />
+                                    </div>
+                                    <div class="col">
+                                        性別：<br />
+                                        <input type="text" name="f會員性別" value="@Model.f會員性別" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <p>
+                                    大頭貼：<br />
+                                    <input type="text" name="f會員大頭貼" value="@Model.f會員大頭貼" class="form-control" />
+                                </p>
+                                <p>
+                                    自我介紹：<br />
+                                    <textarea name="f會員自我介紹" cols="50" rows="6" class="form-control">@Model.f會員自我介紹</textarea>
+                                </p>
+
+                            </div>
+
+                        </div>
+                        <p>
+                            <input type="submit" value="存檔" class="btn btn-primary" />
+                            <input type="button" onclick="history.back()" value="關閉" class="btn btn-secondary" />
+                        </p>
+                    </form>
+
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="~/Scripts/jquery-slim.min.js"><\/script>')</script>
+    <script src="~/Content/bootstrap-4.5.2-dist/js/bootstrap.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="~/Scripts/IIIProject/dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,175 @@
+﻿@{ 
+    Layout = null;
+    var x = (tMember)Session["member"];
+}
+   
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>關於我們 | Jouta</title>
+    @Styles.Render("~/Content/css/bootstrap.min.css")
+    @Styles.Render("~/Content/sass/style.css")
+    @Styles.Render("~/Content/css/關於我們.css")
+</head>
+
+<body class="b2">
+
+    <div class="container-fluid">
+
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg navbar-fixed-top" id="main">
+            <div class="container">
+                <a class="navbar-brand" href="@Url.Action("Home", "Home")">
+                    @*改用Url.Action*@
+                    <img src="~/Content/images/joutalogo_black.png" alt="" width="100">
+                </a>
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse justify-content-between" id="navbarNav">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item active">@Html.ActionLink("首頁", "Home", "Home", new { }, new { @class = "nav-link nav-main text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找飯局", "EatIndex", "Eat", new { }, new { @class = "nav-link nav-eat text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找旅遊", "TravelIndex", "Travel", new { }, new { @class = "nav-link nav-travel text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找文章", "Index", "Blog", new { }, new { @class = "nav-link nav-blog text-dark" })</li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+
+                        <li class="nav-item">@Html.ActionLink("關於我們", "About", "Home", new { }, new { @class = "nav-link nav-register text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("聯絡我們", "New", "聯絡我們", new { }, new { @class = "nav-link nav-login text-dark" })</li>
+                        @if (Session["member"] != null)
+                        {
+
+
+                            <li class="nav-item nav-link nav-login text-dark">@Html.ActionLink("您好，" + x.f會員名稱, "ProfileIndex", "Profile") </li>
+
+                            <li class="nav-item">@Html.ActionLink("登出", "Home", "Home", new { id = 0 }, new { @class = "nav-link nav-login text-dark" })</li>
+                        }
+                        else
+                        {
+
+
+                            <li class="nav-item">@Html.ActionLink("登入", "LoginIndex", "Login", new { }, new { @class = "nav-link nav-login text-dark" })</li>
+
+                            <li class="nav-item">@Html.ActionLink("註冊", "Register", "Home", new { }, new { @class = "nav-link nav-register text-dark" })</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner banner">
+            <div class="carousel-item active x">
+                <img src="~/Content/images/homeabout5.jpg" class="d-block imgslide" alt="...">
+            </div>
+            <div class="carousel-item x banner">
+                <img src="~/Content/images/1_臺北商圈吃玩買.jpg" class=" d-block imgslide" alt="...">
+            </div>
+        </div>
+    </div>
+    <div class="t1 fadeIn">
+        <h2>交際新曲線 揪趴在身邊</h2>
+        <p>Jouta成立於民國109年，總公司位於台北精華地段，提供消費者最方便的使用者體驗諮詢。</p>
+        <p>成立以來一直秉持「交際無邊界」的理念，服務每一位使用者，建立起Jouta的好口碑。</p>
+        <p>精英團隊的努力，專業態度和資深實力，備受各界的期待，</p>
+        <p>使國人一提到關係，就想到「Jouta」；期許三年內成為台灣最大、最具規模的社會交際平台。</p>
+    </div>
+
+    <div class="container t2 shadow-lg p-3 mb-5 rounded">
+        <div class="row">
+            <hr>
+            <div>
+                <div class="block">
+                    <img src="~/Content/images/關於我們(2).jpg" class="card-img-top img1 align-left slide-in" alt="">
+
+                    <h2>
+                        公司介紹
+                        <span class="text-muted"></span>
+                    </h2>
+                    <p>
+                        Jouta是一款社交應用平台，常用於約會與出遊。在該應用中，使用者可以隨機開立活動以及加團，在此款應用平台中，最使人心動的地方，即是平台上所提供的功能遠遠超出了僅僅揪團的行程，
+                        還可以在上面發文，表達自己的心情感受以及出團經驗；這些功能，使平台含有社會化媒體的作用。
+                    </p>
+                </div>
+
+
+            </div>
+
+            <hr>
+            <div>
+                <div class="block d-flex">
+                    <div>
+                        <h2>
+                            Corporate Culture
+                            <span class="text-muted"></span>
+                        </h2>
+                        <p>
+                            在基姆．卡麥隆〔Kim Cameron〕教授的分析架構中發現，偏好穩定的公司會偏向於強化階層制度；然而，在我們Jouta公司的企業文化中最注重的是創新、開放、多元，公司不相信必須要使用階級制度來控制員工，因為這樣可以有效的使員工適應環境甚至是製造屬於自己喜歡的工作環境，才能對公司穩定創造更長期的業務。
+                        </p>
+                    </div>
+                    <img src="~/Content/images/關於我們(3).jpg" class="card-img-top img2  align-right slide-in" alt="">
+
+                </div>
+            </div>
+            <hr>
+            <div class="">
+                <div class="block">
+                    <img src="~/Content/images/關於我們(1).png" class="card-img-top img1 align-left slide-in" alt="">
+                    <h2>
+                        創新
+                        <span class="text-muted"></span>
+                    </h2>
+                    <p>
+                        「不創新，就等死！」（Innovate or die），是管理學之父彼得杜拉克的名言，努力不懈創造各種客製化功能以及揪團體驗；我們相信「經營社群」與「產品創新」是密不可分，同時也是條漫漫長路，需要用時間與誠意培養，絕對沒有一步到位的捷徑。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="t4">
+        <div class="">
+            <div class="row">
+                <div class="col-sm " style="text-align:center;">
+                    <img src="~/Content/images/gps.png" alt="" width="200">
+                    <h2>服務據點</h2>
+                </div>
+                <div class="col-sm">
+                    <h4>資訊工業策進會</h4>
+                    <h5>台北公司</h5>
+                    <p>服務專線：(02)27089215</p>
+                    <p>10658台北市大安區信義路三段153號11樓</p>
+
+                </div>
+                <div class="col-sm">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.011147857099!2d121.54038681537861!3d25.033695744456786!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abd4825ecdf1%3A0xa9479a36fc6b99d0!2sDigital%20Education%20Institute%2C%20III!5e0!3m2!1szh-TW!2stw!4v1600151782083!5m2!1szh-TW!2stw"
+                            width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0">
+                    </iframe>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- footer -->
+    <div class="container-fluid footer">
+        <p class="text-center mt-2 mb-2" style="font-size:16px;">Copyright © 2020 Jouta All rights reserved</p>
+    </div>
+
+    <!-- script -->
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Scripts/IIIProject/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/IIIProject/navbar.js"></script>
+    <script src="~/Scripts/IIIProject/debounce.js"></script>
+</body>
+</html>

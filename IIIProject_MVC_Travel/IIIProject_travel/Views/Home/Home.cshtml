@@ -1,0 +1,563 @@
+﻿@model IIIProject_travel.ViewModel.CData
+@{
+    Layout = null;
+    var x = (tMember)Session["member"];
+}
+
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jouta | 揪團</title>
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome/css/all.css" rel="stylesheet" />
+    <link href="~/Content/sass/style.css" rel="stylesheet" />
+    <link href="~/Content/sass/main.css" rel="stylesheet" />
+    <link href="~/Content/css/slider.css" rel="stylesheet" />
+    <style>
+        #gotop {
+            position: fixed;
+            z-index: 90;
+            right: 30px;
+            bottom: 31px;
+            display: none;
+            width: 50px;
+            height: 50px;
+            color: #fff;
+            background: #f5be2e;
+            line-height: 50px;
+            border-radius: 50%;
+            transition: all 0.5s;
+            text-align: center;
+            box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+        }
+
+            #gotop :hover {
+                background: #f5be2e;
+            }
+    </style>
+
+</head>
+
+<body>
+    <div class="container-fluid topbanner">
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg navbar-fixed-top" id="main">
+            <div class="container">
+                <a class="navbar-brand" href="@Url.Action("Home", "Home")">
+                    @*改用Url.Action*@
+                    <img src="~/Content/images/joutalogo_black.png" alt="" width="100">
+                </a>
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse justify-content-between" id="navbarNav">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item active">@Html.ActionLink("首頁", "Home", "Home", new { }, new { @class = "nav-link nav-main text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找飯局", "EatIndex", "Eat", new { }, new { @class = "nav-link nav-eat text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找旅遊", "TravelIndex", "Travel", new { }, new { @class = "nav-link nav-travel text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("找文章", "Index", "Blog", new { }, new { @class = "nav-link nav-blog text-dark" })</li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+
+                        <li class="nav-item">@Html.ActionLink("關於我們", "About", "Home", new { }, new { @class = "nav-link nav-register text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("聯絡我們", "New", "聯絡我們", new { }, new { @class = "nav-link nav-login text-dark" })</li>
+                        @if (Session["member"] != null)
+                        {
+
+
+                            <li class="nav-item nav-link nav-login text-dark">@Html.ActionLink("您好，" + x.f會員名稱, "ProfileIndex", "Profile") </li>
+
+                            <li class="nav-item">@Html.ActionLink("登出", "Home", "Home", new { id = 0 }, new { @class = "nav-link nav-login text-dark" })</li>
+                        }
+                        else
+                        {
+
+
+                            <li class="nav-item">@Html.ActionLink("登入", "LoginIndex", "Login", new { }, new { @class = "nav-link nav-login text-dark" })</li>
+
+                            <li class="nav-item">@Html.ActionLink("註冊", "Register", "Home", new { }, new { @class = "nav-link nav-register text-dark" })</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- main -->
+        <div id="mainView" class="main video-section">
+            <video src="~/Content/images/video.mp4" autoplay muted loop></video>
+            <div class="content v-title">
+                <div class="slogan">
+                    <h2 class="slogan2">{{slogan2}}</h2>
+                    <p class="mt-3">
+                        {{ slogan1}}
+                        <br>
+                        {{ slogan3}}
+                    </p>
+                </div>
+                <a class="btn btnQuickmatch" href='@Url.Action("QuickMatch")'>點我快速加團</a> @*改用Url.Action*@
+            </div>
+
+        </div>
+        <!--    selection table    -->
+        <div class="tabs">
+            <ul class="nav nav-tabs">
+                <li class="">
+                    <a class="active label" data-toggle="tab" href="#tabone">
+                        <i class="fas fa-utensils mr-3"></i>找飯局
+                    </a>
+                </li>
+                <li class="">
+                    <a class="label" data-toggle="tab" href="#tabtwo">
+                        <i class="fas fa-suitcase-rolling mr-3"></i>找旅遊
+                    </a>
+                </li>
+                <li class="">
+                    <a class="label" data-toggle="tab" href="#tabthree">
+                        <i class="fas fa-pen mr-3"></i>找文章
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="tabone" class="tab-pane fade in active show">
+
+                    <form class="form-inline table d-flex align-items-end" method="POST" action="~/Eat/EatIndex">
+                        <div class="form-group col-lg-3 col-md-3 col-sm-12 inner">
+                            <label for="location_eat">分類:</label>
+                            <select class="form-control" name="txtEatCategory" id="location_eat">
+                                <option value="素食">&nbsp;素食</option>
+                                <option value="葷食">&nbsp;葷食</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-12 inner">
+                            <label for="label">總讚數:</label>
+                            <select class="form-control" name="txtTotalGood" id="label" style="border: none;">
+                                <option value="全部" selected>&nbsp;全部</option>
+                                <option value="10">讚>10</option>
+                                <option value="30">讚>30</option>
+                                <option value="50">讚>50</option>
+                                <option value="100">讚>100</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-12 inner">
+                            <label for="keyword">關鍵字:</label>
+                            <input type="text" name="txtEatKeyword" class="form-control" id="keyword">
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-12 inner mb-0">
+                            <button type="submit" class="btn btn-warning">搜尋去</button>
+                        </div>
+
+                    </form>
+
+                </div>
+                <div id="tabtwo" class="tab-pane fade">
+                    <form class="form-inline table d-flex align-items-end" method="POST" action="~/Travel/TravelIndex">
+                        <div class="form-group col-lg-3 col-md-3 col-sm-12 inner">
+                            <label for="location_travel">分類:</label>
+                            <select class="form-control" name="txtTravelCategory" id="location_travel">
+                                <option style="width:auto;margin:0 auto;" value="所有" selected>
+                                    &nbsp;所有
+                                </option>
+                                <option value="兩天一夜">&nbsp;兩天一夜</option>
+                                <option value="三天兩夜">&nbsp;三天兩夜</option>
+                                <option value="五天四夜">&nbsp;五天四夜</option>
+                                <option value="七天六夜">&nbsp;七天六夜</option>
+                                <option style="text-align:center;" value="其他">
+                                    &nbsp;其他
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-12 inner">
+                            <label for="label">總讚數:</label>
+                            <select class="form-control" name="txtTotalGood" id="label" style="border: none;">
+                                <option value="全部" selected>&nbsp;全部</option>
+                                <option value="10">&nbsp;讚>10</option>
+                                <option value="30">&nbsp;讚>30</option>
+                                <option value="50">&nbsp;讚>50</option>
+                                <option value="100">&nbsp;讚>100</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-12 inner">
+                            <label for="keyword_travel">關鍵字:</label>
+                            <input type="text" name="txtTravelKeyword" class="form-control" id="keyword_travel">
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-12 inner mb-0">
+                            <button type="submit" class="btn btn-warning">搜尋去</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="tabthree" class="tab-pane fade">
+                    <form class="form-inline table d-flex align-items-end" method="POST" action="~/Blog/Index">
+
+                        <div class="form-group col-lg-4 col-md-4 col-sm-12 inner">
+                            <label for="keyword_article">關鍵字:</label>
+                            <input type="text" name="txtKey" class="form-control" id="keyword_article">
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-12 inner mb-0">
+                            <button type="submit" class="btn btn-warning">搜尋去</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <a href="#" id="gotop">
+        <i class="far fa-hand-point-up"></i>
+    </a>
+
+    <!-- 精選團主 -->
+    <section class="member mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="member_content">
+                    <div class="member_icon">
+                        <img src="~/Content/images/member.png" alt="">
+                    </div>
+                    <div class="member_title">
+                        <h2>精選團主</h2>
+                    </div>
+
+                    <div class="member_block">
+                        <div class="container">
+                            <div id="member" class="row">
+                                @foreach (tMember t in Model.tMembers)
+                                {
+                                    <div class="col-lg-4 col-sm-12 block">
+                                        <div class="person">
+                                            <div class="card" @*style="width: 18rem;"*@>
+                                                <img src="~/Content/images/@t.f會員大頭貼" class="card-img-top" alt="" width="350" height="250">
+                                                <div class="card-body">
+                                                    <h3 class="card-title">@t.f會員名稱</h3>
+                                                    <p class="card-text">
+                                                        @t.f會員自我介紹
+                                                    </p>
+                                                    @Html.ActionLink("了解一下", "otherProfile", "Profile", new { id = t.f會員編號 }, new { @class = "btn btnContent" })                                                @*<a href="profile.html" class="btn btnContent">Go somewhere</a>*@
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 饕客看這裡 -->
+    <main>
+        <section class="slides">
+            <div class="container">
+                <div class="row">
+                    <div class="member_content">
+                        <div class="member_icon">
+                            <img src="~/Content/images/eat.png" alt="">
+                        </div>
+                        <div class="member_title">
+                            <h2>饕客看這裡</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="slides-nav">
+                <nav class="slides-nav__nav">
+                    <button class="slides-nav__prev js-prev">Prev</button>
+                    <button class="slides-nav__next js-next">Next</button>
+                </nav>
+            </section>
+
+            <section class="slide is-active">
+                <div class="slide__content">
+                    <figure class="slide__figure">
+                        <div class="slide__img" style="background-image: url(/Content/images/mirawan.jpg)">
+                        </div>
+                    </figure>
+                    <header class="slide__header">
+                        <h2 class="slide__title">
+                            <span class="title-line"><span>MIRAWAN</span></span>
+                            <span class="title-line"><span>高樓景觀法菜餐廳</span></span>
+                        </h2>
+                    </header>
+
+                </div>
+            </section>
+
+            <section class="slide">
+                <div class="slide__content">
+                    <figure class="slide__figure">
+                        <div class="slide__img" style="background-image: url(/Content/images//nobu.jpg)"></div>
+                    </figure>
+                    <header class="slide__header">
+                        <h2 class="slide__title">
+                            <span class="title-line"><span>NOBU</span></span>
+                            <span class="title-line"><span>精緻日式盛宴</span></span>
+                        </h2>
+                    </header>
+
+                </div>
+            </section>
+
+            <section class="slide">
+                <div class="slide__content">
+                    <figure class="slide__figure">
+                        <div class="slide__img" style="background-image: url(/Content/images//orchid.jpeg)"></div>
+                    </figure>
+                    <header class="slide__header">
+                        <h2 class="slide__title">
+                            <span class="title-line"><span>ORCHID</span></span>
+                            <span class="title-line"><span>深入法式料理</span></span>
+                        </h2>
+                    </header>
+
+                </div>
+            </section>
+
+            <section class="slide">
+                <div class="slide__content">
+                    <figure class="slide__figure">
+                        <div class="slide__img" style="background-image: url(/Content/images//02.jpg)"></div>
+                    </figure>
+                    <header class="slide__header">
+                        <h2 class="slide__title">
+                            <span class="title-line"><span>BIONA</span></span>
+                            <span class="title-line"><span>湖景餐廳</span></span>
+                        </h2>
+                    </header>
+
+                </div>
+            </section>
+        </section>
+    </main>
+
+
+    <!-- 跟我趴趴走 -->
+    <section class="gowhere">
+        <div class="container mt-3">
+            <div class="row">
+                <div class="member_content">
+                    <div class="member_icon">
+                        <img src="~/Content/images/travel.png" alt="">
+                    </div>
+                    <div class="member_title">
+                        <h2>跟我趴趴走</h2>
+                    </div>
+                </div>
+                @foreach (tActivity a in Model.tActivities)
+                {
+                    <div class="col-lg-4">
+                        <figure class="traveller">
+                            <div class="image">
+                                <img src="~/Content/images/@a.f活動團圖" alt="@a.tMember.f會員名稱" @*width="350"*@ height="250" style="border-radius:5px 5px 0 0;" />
+                            </div>
+                            <figcaption style="border-radius:0 0 5px 5px;">
+                                <h3 class="card-text-title">@a.f活動標題</h3>
+                                <p class="card-text" style="text-align: left;">
+                                    @a.f活動內容
+                                </p>
+                                <button class="btn btnContent mt-2" data-toggle="modal" data-target="#modal_@a.f活動編號">查看詳情</button>
+
+                                <section class="block_footer row justify-content-between">
+                                    <div class="date">@a.f活動開始時間</div>
+                                    <div class="icons row">
+                                        <div class="views mr-2">
+                                            <i class="ion-eye"></i>@a.f活動瀏覽次數
+                                        </div>
+                                        <div class="love">
+                                            <i class="ion-heart"></i>@a.f活動讚數
+                                        </div>
+                                    </div>
+                                </section>
+                            </figcaption>
+                        </figure>
+                    </div>
+
+                    <div class="modal" id="modal_@a.f活動編號">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h1 class="modal-title">@a.f活動標題</h1>
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <img src="~/Content/images/@a.f活動團圖" alt="@a.f活動編號" />
+                                    <p>@a.f活動內容</p>
+                                    <div class="container">
+                                        <img src="~/Content/images/17.png" alt="">@a.f活動分類
+                                        <img src="~/Content/images/03.png" alt="">@a.f活動地區
+                                        <img src="~/Content/images/04.png" alt="">@a.f活動預算
+                                        <img src="~/Content/images/06.png" class="" alt="">@a.f活動瀏覽次數
+                                        <img src="~/Content/images/05.png" class="" alt="">@a.f活動讚數
+                                    </div>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    @*<button type="button" class="btn btn-warning"><a id=@a.f會員編號 href="~/Travel/TravelIndex">來去+1</a></button>*@
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <!-- footer -->
+    <div class="page-wrapper mt-3">
+        <footer>
+            <div class="footer-top">
+                <div class="mask"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 col-sm-12 footer-col-3">
+                            <div class="widget footer_widget">
+                                <div class="gem-contacts">
+                                    <div class="mb-3">
+                                        <img src="~/Content/images/joutalogo_white.png" alt="">
+                                    </div>
+
+                                    <div class="gem-contacts-item gem-contacts-address mt-5">
+                                        <p>
+                                            我們是一群來自各方的夥伴，用心創立一個解決孤單寂寞冷的揪團平台。
+                                            想玩怕沒人陪嗎?何不來此+1呢?
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-2"></div>
+                        <div class="col-12 col-lg-4 col-md-12 col-sm-12">
+                            <div class="widget footer_widget">
+                                <ul class="posts styled">
+                                    <li class="clearfix gem-pp-posts">
+                                        @Html.ActionLink("找飯局", "EatIndex", "Eat")
+                                        @*<a href="eat.html">找飯局</a>*@
+                                    </li>
+                                    <li class="clearfix gem-pp-posts">
+                                        @Html.ActionLink("找旅遊", "TravelIndex", "Travel")
+                                        @*<a href="travel.html">找旅遊</a>*@
+                                    </li>
+                                    <li class="clearfix gem-pp-posts">
+                                        @Html.ActionLink("找文章", "Index", "Blog")
+                                        @*<a href="blog_main.html">找文章</a>*@
+                                    </li>
+                                    <li class="clearfix gem-pp-posts">
+                                        @Html.ActionLink("關於我們", "About", "Home")
+                                        @*<a href="about_us.html">關於我們</a>*@
+                                    </li>
+                                    <li class="clearfix gem-pp-posts">
+                                        @Html.ActionLink("聯絡我們", "New", "聯絡我們")
+                                        @*<a href="contact_us.html">聯絡我們</a>*@
+                                    </li>
+                                    <li class="clearfix gem-pp-posts">
+                                        @Html.ActionLink("觀光局公開資訊", "TravelOpenDataIndex", "OpenDataConnect")
+                                        @*<a href="contact_us.html">聯絡我們</a>*@
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <div class="footer-site-info">
+                                &copy; @DateTime.Now.Year Jouta
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div id="footer-socials">
+                                <div>
+                                    <a href="#" target="_blank" title="Facebook" class="socials-item">
+                                        <i class="fab fa-facebook-f facebook"></i>
+                                    </a>
+                                    <a href="#" target="_blank" title="Twitter" class="socials-item">
+                                        <i class="fab fa-twitter twitter"></i>
+
+                                    </a>
+                                    <a href="#" target="_blank" title="Instagram" class="socials-item">
+                                        <i class="fab fa-instagram instagram"></i>
+                                    </a>
+                                    <a href="#" target="_blank" title="YouTube" class="socials-item">
+                                        <i class="fab fa-youtube youtube"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- script -->
+    @Scripts.Render("~/Scripts/jquery-3.5.1.js")
+    @Scripts.Render("~/Scripts/vue.js")
+    @Scripts.Render("~/Scripts/IIIProject/popper.min.js")
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+    @Scripts.Render("~/Scripts/IIIProject/slider.js")
+    @Scripts.Render("~/Scripts/IIIProject/travel_main.js")
+    <script src="~/Scripts/IIIProject/navbar.js"></script>
+
+    <script>
+        let vm = new Vue({
+            el: '#mainView',
+            data: {
+                slogan2: '我的旅程精彩有你',
+                slogan1: `你還在等待與你旅行的那個人出現嗎?`,
+                slogan3: `想要一同歡樂卻總是3缺1呢?`
+            }
+        });
+    </script>
+    <script>
+        function kk() {
+            $('#form1').submit();
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            /* 按下GoTop按鈕時的事件 */
+            $('#gotop').click(function () {
+                $('html,body').animate({ scrollTop: 0 }, 'slow');   /* 返回到最頂上 */
+                return false;
+            });
+
+            /* 偵測卷軸滑動時，往下滑超過400px就讓GoTop按鈕出現 */
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 400) {
+                    $('#gotop').fadeIn();
+                } else {
+                    $('#gotop').fadeOut();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
